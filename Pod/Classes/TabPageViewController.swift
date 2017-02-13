@@ -41,7 +41,6 @@ open class TabPageViewController: UIPageViewController {
 
         setupPageViewController()
         setupScrollView()
-        updateNavigationBar()
     }
 
     override open func viewWillAppear(_ animated: Bool) {
@@ -59,7 +58,6 @@ open class TabPageViewController: UIPageViewController {
     override open func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
 
-        updateNavigationBar()
         tabView.layouted = true
     }
 
@@ -117,17 +115,6 @@ extension TabPageViewController {
         scrollView?.scrollsToTop = false
         scrollView?.delegate = self
         scrollView?.backgroundColor = option.pageBackgoundColor
-    }
-
-    /**
-     Update NavigationBar
-     */
-
-    fileprivate func updateNavigationBar() {
-        if let navigationBar = navigationController?.navigationBar {
-            navigationBar.shadowImage = UIImage()
-            navigationBar.setBackgroundImage(option.tabBackgroundImage, for: .default)
-        }
     }
 
     fileprivate func configuredTabView() -> TabView {
