@@ -14,6 +14,19 @@ open class TabPageViewController: UIPageViewController {
     open var tabItems: [(viewController: UIViewController, title: String)] = [] {
         didSet {
             tabItemsCount = tabItems.count
+            if tabItems.count > 0 {
+                setupPageViewController()
+                setupScrollView()
+                if tabView.superview == nil {
+                    tabView = configuredTabView()
+                }
+                
+                if let currentIndex = currentIndex , isInfinity {
+                    tabView.updateCurrentIndex(currentIndex, shouldScroll: true)
+                }
+                tabView.scrollToHorizontalCenter()
+                tabView.layouted = true
+            }
         }
     }
 
@@ -35,38 +48,6 @@ open class TabPageViewController: UIPageViewController {
         let sb = UIStoryboard(name: "TabPageViewController", bundle: Bundle(for: TabPageViewController.self))
         return sb.instantiateInitialViewController() as! TabPageViewController
     }
-
-    override open func viewDidLoad() {
-        super.viewDidLoad()
-
-        setupPageViewController()
-        setupScrollView()
-    }
-
-    override open func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-
-        if tabView.superview == nil {
-            tabView = configuredTabView()
-        }
-
-        if let currentIndex = currentIndex , isInfinity {
-            tabView.updateCurrentIndex(currentIndex, shouldScroll: true)
-        }
-    }
-
-    override open func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
-
-        tabView.layouted = true
-    }
-
-    override open func viewWillDisappear(_ animated: Bool) {
-        super.viewWillDisappear(animated)
-
-        navigationController?.navigationBar.shadowImage = nil
-        navigationController?.navigationBar.setBackgroundImage(nil, for: .default)
-    }
 }
 
 
@@ -75,6 +56,10 @@ open class TabPageViewController: UIPageViewController {
 public extension TabPageViewController {
 
     public func displayControllerWithIndex(_ index: Int, direction: UIPageViewControllerNavigationDirection, animated: Bool) {
+
+        if tabItems.count == 0 {
+            return
+        }
 
         beforeIndex = index
         shouldScrollCurrentBar = false
