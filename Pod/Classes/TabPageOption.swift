@@ -13,7 +13,7 @@ public struct TabPageOption {
     public init() {}
 
     public var highlightTitleFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
-    public var unHighlightTitle = UIFont.systemFont(ofSize: UIFont.systemFontSize)
+    public var unHighlightTitleFont = UIFont.systemFont(ofSize: UIFont.systemFontSize)
     public var currentColor = UIColor(red: 105/255, green: 182/255, blue: 245/255, alpha: 1.0)
     public var defaultColor = UIColor(red: 153/255, green: 153/255, blue: 153/255, alpha: 1.0)
     public var tabBarAlpha: CGFloat = 0.95
